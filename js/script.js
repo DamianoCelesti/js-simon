@@ -1,10 +1,12 @@
 // selezioniamo elemento
 
 const timer = document.getElementById("countdown");
-const risposte = document.getElementById("answers-form");
+const form = document.getElementById("answers-form");
 const numeri = document.getElementById("numbers-list");
-const bottone = document.querySelector(".btn");
-const messaggio = document.getElementById("message");
+// const messaggio = document.getElementById("message");
+
+
+
 
 // genera numeri
 
@@ -28,11 +30,22 @@ const decremento = setInterval(() => {
     timer.textContent = secondi;
     if(secondi === 0){
         clearInterval(decremento);
-        risposte.classList.remove("d-none");
+        form.classList.remove("d-none");
         numeri.classList.add("d-none");
     }
     secondi--;
 }, 1000);
 
 
+// intercetto l'evento di invio
+form.addEventListener("submit", (event) => {
+    //blocco l'invio del form
+    event.preventDefault();
+    const risposte = document.querySelectorAll("#input-group input");
+    
 
+    for (let i = 0; i < risposte.length; i++) {
+        console.log("Numeri dell'utente", risposte[i].value);
+    }
+    
+});
