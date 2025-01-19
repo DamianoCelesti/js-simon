@@ -28,7 +28,7 @@ let secondi = 5;
 
 const decremento = setInterval(() => {
     timer.textContent = secondi;
-    if(secondi === 0){
+    if (secondi === 0) {
         clearInterval(decremento);
         form.classList.remove("d-none");
         numeri.classList.add("d-none");
@@ -41,11 +41,38 @@ const decremento = setInterval(() => {
 form.addEventListener("submit", (event) => {
     //blocco l'invio del form
     event.preventDefault();
+    // recupero i valori degli input (nodelist)
     const risposte = document.querySelectorAll("#input-group input");
+    const risposteUtente = [];
     
 
     for (let i = 0; i < risposte.length; i++) {
-        console.log("Numeri dell'utente", risposte[i].value);
+        
+        // aggiungo i numeri dalla nodelist all array e li trasformo in numeri
+        risposteUtente.push(parseInt(risposte[i].value));
     }
-    
+    console.log("numeri dell'utente", risposteUtente);
+    // confronto i numeri indovinati
+    const numeriIndovinati = [];  // lista dove mettere i numeri =
+
+    for(let i = 0; i < numeriCasuali.length; i++) {
+        // se risposte dell'utente sono incluse nei numeri casuali, mi pushi i numeri nella lista 
+        if (risposteUtente.includes(numeriCasuali[i])) {
+            numeriIndovinati.push(numeriCasuali[i]);
+        }
+    }
+// seleziono l elemento 
+const messaggio = document.getElementById("message");
+
+// imposto il messaggio
+const quantitaIndovinati = numeriIndovinati.length; 
+const numeriIndovinatiTesto = numeriIndovinati.join(", "); 
+messaggio.textContent = `Hai indovinato ${quantitaIndovinati} numeri: ${numeriIndovinatiTesto}`;
+
+messaggio.classList.remove("d-none");
+
+console.log("Numeri generati casualmente:", numeriCasuali);
+console.log("Numeri inseriti dall'utente:", risposteUtente);
+console.log("Numeri indovinati:", numeriIndovinati);
 });
+
